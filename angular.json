@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "ATGamesPicker": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ATGamesPicker",
+            "outputPath": "docs/",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "ATGamesPicker"
+    }
+  },
+  "defaultProject": "ATGamesPicker",
+  "cli": {
+    "analytics": "a7298fbc-982f-46ae-b578-3b37d8ed2aa5"
+  }
 }
