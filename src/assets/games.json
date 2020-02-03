@@ -1,0 +1,32 @@
+{
+    "games": [
+        {
+            "platform": "STEAM",
+            "imageUrl": "https://www.atgames.net/arcadenet/assets/images/cloudPlay/steam.png"
+        },
+        {
+            "platform": "ORIGIN",
+            "imageUrl": "https://www.atgames.net/arcadenet/assets/images/cloudPlay/origin.png"
+        },
+        {
+            "platform": "BLIZZARD",
+            "imageUrl": "https://www.atgames.net/arcadenet/assets/images/cloudPlay/blizzard.png"
+        },
+        {
+            "platform": "EPIC",
+            "imageUrl": "https://www.atgames.net/arcadenet/assets/images/cloudPlay/epic.png"
+        },
+        {
+            "platform": "UBISOFT",
+            "imageUrl": "https://www.atgames.net/arcadenet/assets/images/cloudPlay/ubisoft.png"
+        },
+        {
+            "platform": "GOG",
+            "imageUrl": "https://www.atgames.net/arcadenet/assets/images/cloudPlay/gog.png"
+        },
+        {
+            "platform": "LOCAL SERVER",
+            "imageUrl": "https://www.atgames.net/arcadenet/assets/images/cloudPlay/local server.png"
+        }
+    ]
+}
