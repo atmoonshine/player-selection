@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="604" height="74" viewBox="0 0 604 74">
+    <g fill="none" fill-rule="evenodd">
+        <path stroke="#2771AC" stroke-opacity=".604" d="M572.37 55H31.63L-26.642-48h657.286L572.369 55z"/>
+        <path fill="#000" stroke="#2771AC" stroke-opacity=".604" d="M530.887 73.5H73.113l-49.255-87h556.284l-49.255 87z"/>
+        <g transform="translate(197 31)">
+            <circle cx="13" cy="13" r="13" fill="#A42F8F"/>
+            <text fill="#000" font-family="Lato-Black, Lato" font-size="22" font-weight="700">
+                <tspan x="5" y="23">A</tspan>
+            </text>
+        </g>
+        <text fill="#58A2DC" font-family="Lato-Black, Lato" font-size="18" font-weight="700" transform="translate(197 31)">
+            <tspan x="32" y="24">SELECT</tspan>
+        </text>
+        <g>
+            <g transform="translate(325.5 31)">
+                <circle cx="13" cy="13" r="13" fill="#A42F8F"/>
+                <text fill="#000" font-family="Lato-Black, Lato" font-size="22" font-weight="700">
+                    <tspan x="6" y="24">B</tspan>
+                </text>
+            </g>
+            <text fill="#58A2DC" font-family="Lato-Black, Lato" font-size="18" font-weight="700" transform="translate(325.5 31)">
+                <tspan x="31" y="24">BACK</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
