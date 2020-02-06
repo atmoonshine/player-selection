@@ -1,5 +1,6 @@
 <div class="grid-container">
     <a class="grid-item" *ngFor="let game of games$ | async" [routerLink]="['/player-select']">
-        <img [src]="game.imageUrl" />
+        <img [src]="game.imageUrl"
+        srcset="{{game.imageUrl}}@2x.png 2x, {{game.imageUrl}}@3x 3x">
     </a>
 </div>
