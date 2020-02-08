@@ -19,6 +19,7 @@ export class PlayerSelectorComponent {
 
     @HostListener('window:keyup', ['$event'])
     onKeyUp(event: KeyboardEvent) {
+        console.log('key up');
         const player = this.players.find(p => p.key.toLowerCase() === event.key.toLowerCase());
 
         if (player) this.onClick(player);
@@ -26,13 +27,11 @@ export class PlayerSelectorComponent {
 
     @HostListener('window:keydown', ['$event'])
     onKeyDown(event: KeyboardEvent) {
+        console.log('key down');
         const player = this.players.find(p => p.key.toLowerCase() === event.key.toLowerCase());
-
-        if (player) document.getElementsByClassName(player.color)[0].classList.add('is-pushed');
     }
 
     onClick(player: Player) {
-        document.getElementsByClassName(player.color)[0].classList.remove('is-pushed');
         player.isReady = true;
     }
 }

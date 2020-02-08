@@ -4,6 +4,12 @@
     align-items: center;
     height: 100%;
 
+    .controller-icon {
+        position: absolute;
+        top: 30px;
+        left: 50px;
+    }
+
     .container {
         padding-top: 75px;
         display: flex;
@@ -13,10 +19,61 @@
 
         .player {
             width: 762px;
+            height: 368px;
             margin: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+            color: white;
+            text-align: center;
+
+            .player-ctrl {
+                position: absolute;
+                left: 0;
+                font-size: 40px;
+            }
+
+            .player-bkg {
+                position: absolute;
+                z-index: -1;
+            }
+
+            .oval {
+                fill: white;
+            }
+
+            .metadata {
+                position: absolute;
+                left: 405px;
+                top: 47px;
+
+                h1 {
+                    font-size: 38px;
+                    font-weight: 900;
+                    letter-spacing: 5px;
+                    margin: 0;
+                }
+
+                h2 {
+                    font-size: 28px;
+                    letter-spacing: 3.68px;
+                    margin: 0 0 16px 0;
+                }
+
+                h3 {
+                    font-size: 32px;
+                    font-weight: 900;
+                    letter-spacing: 4.21px;
+                    margin-top: 10px;
+                }
+            }
+
+            &.selected {
+                .oval {
+                    fill: #6dd400;
+                }
+            }
         }
     }
 }
