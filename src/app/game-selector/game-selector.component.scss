@@ -11,12 +11,21 @@
         justify-content: center;
         align-items: center;
 
-        .player {
-            width: 762px;
-            margin: 15px;
+        .game {
+            width: 522px;
+            height: 252px;
+            margin: 26px;
             display: flex;
             justify-content: center;
             align-items: center;
+            box-shadow: 0 2px 10px 5px rgba(0, 0, 0, 0.03);
+            border: solid 4px transparent;
+            border-radius: 20px;
+
+            &:focus,
+            &:hover {
+                border-color: #f8f8f8;
+            }
         }
     }
 }

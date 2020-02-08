@@ -1,22 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
 body {
     margin: 0;
     background: url('assets/background.svg') center;
     background-size: cover;
+    background-repeat: no-repeat;
     width: 100vw;
     height: 100vh;
-}
-
-@font-face {
-    font-family: 'Joystix Monospace';
-    src: url('assets/joystix.ttf') format('truetype');
-    font-style: normal;
-}
-html,
-body {
-    height: 100%;
-}
-body {
-    margin: 0;
     font-family: Roboto, 'Helvetica Neue', sans-serif;
+    overscroll-behavior: none;
+    overflow-y: hidden;
 }
