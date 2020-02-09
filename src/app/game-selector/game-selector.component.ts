@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {} from '@angular/common';
-import { shareReplay, map } from 'rxjs/operators';
+import { shareReplay, map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { GamesCollection } from 'src/app/models/games-collection';
 
@@ -12,8 +12,9 @@ import { GamesCollection } from 'src/app/models/games-collection';
 export class GameSelectorComponent {
     games$ = this.http.get<GamesCollection>('assets/games.json').pipe(
         map(collection => collection.games),
+        tap(() => window.setTimeout(() => document.getElementsByTagName('a')[0].focus())),
         shareReplay(1)
     );
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 }
