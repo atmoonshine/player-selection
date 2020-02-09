@@ -126,9 +126,12 @@
           "builder": "@azure/ng-deploy:logout"
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy",
-          "options": {}
-        }
+            "builder": "angular-cli-ghpages:deploy",
+            "options": {
+              "baseHref": "https://atmoonshine.github.io/player-selection/",
+              "name": "Player Selection"
+            }
+          }
       }
     }
   },
