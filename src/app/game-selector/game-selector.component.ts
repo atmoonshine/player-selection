@@ -27,8 +27,21 @@ export class GameSelectorComponent {
 
         if (game.platform === 'COINOPS') {
             // TODO: Launch Coinops
+            location.href = 'ms-calculator://';
         } else if (game.platform === 'Controller Select') {
             this.router.navigate(['/controller-select']);
+        }
+    }
+
+    onGameKeyDown(game: Game, event: KeyboardEvent) {
+        if (event.key === 'ArrowRight' && game.platform === 'COINOPS') {
+            document.getElementById('Controller Select')?.focus();
+            return;
+        }
+
+        if (event.key === 'ArrowLeft' && game.platform === 'Controller Select') {
+            document.getElementById('COINOPS')?.focus();
+            return;
         }
     }
 }
