@@ -7,11 +7,11 @@ class Player {
 }
 
 @Component({
-    selector: 'app-player-selector',
-    templateUrl: './player-selector.component.html',
-    styleUrls: ['./player-selector.component.scss']
+    selector: 'app-controller-select',
+    templateUrl: './controller-select.component.html',
+    styleUrls: ['./controller-select.component.scss']
 })
-export class PlayerSelectorComponent {
+export class ControllerSelectComponent {
     players = new Array<Player>(
         new Player(1, XboxButtons.GamepadA),
         new Player(2, XboxButtons.GamepadB),

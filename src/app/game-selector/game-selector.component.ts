@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import {} from '@angular/common';
 import { shareReplay, map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { GamesCollection } from 'src/app/models/games-collection';
+import { GamesCollection, Game } from 'src/app/models/games-collection';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-game-selector',
@@ -16,5 +17,18 @@ export class GameSelectorComponent {
         shareReplay(1)
     );
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private router: Router) {}
+
+    onGameClick(game: Game, event?: Event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        if (game.platform === 'COINOPS') {
+            // TODO: Launch Coinops
+        } else if (game.platform === 'Controller Select') {
+            this.router.navigate(['/controller-select']);
+        }
+    }
 }
