@@ -1,20 +1,41 @@
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const url = require("url");
+const {ipcMain} = require('electron');
+const child = require('child_process').execFile;
 
 let win;
 
 function createWindow() {
-  win = new BrowserWindow({ width: 1280, height: 720 });
+  win = new BrowserWindow({
+    width: 1920,
+    height: 1080,
+    webPreferences: {
+      nodeIntegration: true,
+    }
+  });
+
+  ipcMain.on('launch', (_event, args) => {
+
+    const [executablePath, ...parameters] = args.command.arguments;
+    console.log('launching', executablePath, parameters);
+
+    child(executablePath, parameters, function(err, data) {
+         console.log(err)
+         console.log(data.toString());
+    });
+});
 
   // load the dist folder from Angular
   win.loadURL(
     url.format({
-      pathname: path.join(__dirname, `/docs/index.html`),
+      pathname: path.join(__dirname, `/dist/ATGamesPicker/index.html`),
       protocol: "file:",
       slashes: true
     })
   );
+
+  win.setFullScreen(true);
 
   // The following is optional and will open the DevTools:
   // win.webContents.openDevTools()

@@ -4,6 +4,8 @@ import { shareReplay, map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { GamesCollection, Game } from 'src/app/models/games-collection';
 import { Router } from '@angular/router';
+import { IpcService } from '../../ipc.service';
+import { newArray } from '@angular/compiler/src/util';
 
 @Component({
     selector: 'app-game-selector',
@@ -17,17 +19,30 @@ export class GameSelectorComponent {
         shareReplay(1)
     );
 
-    constructor(private http: HttpClient, private router: Router) {}
+    constructor(private http: HttpClient, private router: Router, private ipc: IpcService) {}
 
     onGameClick(game: Game, event?: Event) {
         if (event) {
             event.preventDefault();
             event.stopPropagation();
         }
+        switch (game.command.type) {
+          case 'ipc':
+              const [ channel ] = game.command.arguments;
+              this.ipc.send(channel, game);
+              break;
+          case 'route':
+              const [ route ] = game.command.arguments;
+              this.router.navigate([route]);
+              break;
+          default:
+
+        }
 
         if (game.platform === 'COINOPS') {
             // TODO: Launch Coinops
-            location.href = 'ms-calculator://';
+            // location.href = 'ms-calculator://';
+            this.ipc.send('launch', game);
         } else if (game.platform === 'Controller Select') {
             this.router.navigate(['/controller-select']);
         }

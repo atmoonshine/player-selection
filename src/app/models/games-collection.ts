@@ -5,4 +5,8 @@ export interface GamesCollection {
 export interface Game {
     platform: string;
     imageUrl: string;
+    command: {
+      type: 'ipc' | 'route'
+      arguments: string[];
+    };
 }
