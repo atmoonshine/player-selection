@@ -1,32 +1,12 @@
 {
     "games": [
         {
-            "platform": "STEAM",
-            "imageUrl": "assets/steam.png"
+            "platform": "COINOPS",
+            "imageUrl": "assets/coinops"
         },
         {
-            "platform": "ORIGIN",
-            "imageUrl": "assets/origin.png"
-        },
-        {
-            "platform": "BLIZZARD",
-            "imageUrl": "assets/blizzard.png"
-        },
-        {
-            "platform": "EPIC",
-            "imageUrl": "assets/epic.png"
-        },
-        {
-            "platform": "UBISOFT",
-            "imageUrl": "assets/ubisoft.png"
-        },
-        {
-            "platform": "GOG",
-            "imageUrl": "assets/gog.png"
-        },
-        {
-            "platform": "LOCAL SERVER",
-            "imageUrl": "assets/localserver.png"
+            "platform": "Controller Select",
+            "imageUrl": "assets/controller-select"
         }
     ]
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GameSelectorComponent } from './game-selector/game-selector.component';
+import { GameSelectorComponent } from './game-selector.component';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [{ path: 'games', component: GameSelectorComponent }];

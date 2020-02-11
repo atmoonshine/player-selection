@@ -1,8 +1,0 @@
-<div class="row">
-    <div class="player player{{ player.playerNumber }}" *ngFor="let player of players">
-        <h1>Player {{ player.playerNumber }}</h1>
-        <button class="arcade-button" [class]="player.color" (click)="onClick(player)" *ngIf="!player.isReady">{{ player.key }}</button>
-        <div class="press-start" *ngIf="player.isReady && player.isPrimary">PRESS START!</div>
-        <div class="ready" *ngIf="player.isReady && !player.isPrimary">Ready!</div>
-    </div>
-</div>

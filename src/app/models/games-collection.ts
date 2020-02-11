@@ -1,3 +1,8 @@
 export interface GamesCollection {
-    games: Array<{ platform: string; imageUrl: string }>;
+    games: Game[];
+}
+
+export interface Game {
+    platform: string;
+    imageUrl: string;
 }
