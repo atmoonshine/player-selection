@@ -38,14 +38,6 @@ export class GameSelectorComponent {
           default:
 
         }
-
-        if (game.platform === 'COINOPS') {
-            // TODO: Launch Coinops
-            // location.href = 'ms-calculator://';
-            this.ipc.send('launch', game);
-        } else if (game.platform === 'Controller Select') {
-            this.router.navigate(['/controller-select']);
-        }
     }
 
     onGameKeyDown(game: Game, event: KeyboardEvent) {

@@ -7,7 +7,8 @@ export declare const enum XboxButtons {
     GamepadA = 0,
     GamepadB = 1,
     GamepadX = 2,
-    GamepadY = 3
+    GamepadY = 3,
+    GamepadRewind = 8,
 }
 
 @Injectable({ providedIn: 'root' })

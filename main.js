@@ -24,7 +24,12 @@ function createWindow() {
          console.log(err)
          console.log(data.toString());
     });
-});
+  });
+
+  ipcMain.on('change-players', (_event, args) => {
+    const readyPlayers = args.filter((player) => !!player.gamepad );
+    console.log('change-players', readyPlayers);
+  })
 
   // load the dist folder from Angular
   win.loadURL(
