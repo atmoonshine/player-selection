@@ -74,6 +74,16 @@
                     fill: #6dd400;
                     box-shadow: 0 0 34px 20px #4f3779;
                     border-radius: 70px;
+                    animation: glow 2s infinite alternate;
+
+                    @keyframes glow {
+                        from {
+                          box-shadow: 0 0 10px 10px #4f3779;
+                        }
+                        to {
+                          box-shadow: 0 0 34px 20px #4f3779;
+                        }
+                      }
                 }
             }
         }
