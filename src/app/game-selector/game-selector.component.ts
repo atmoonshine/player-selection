@@ -4,11 +4,21 @@ import { shareReplay, map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { GamesCollection, Game } from 'src/app/models/games-collection';
 import { Router } from '@angular/router';
+import { HeaderService } from '../header.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
     selector: 'app-game-selector',
     templateUrl: './game-selector.component.html',
-    styleUrls: ['./game-selector.component.scss']
+    styleUrls: ['./game-selector.component.scss'],
+    animations: [
+        trigger('enterRemoveTrigger', [
+            transition(':enter', [
+                style({ transform: 'translateY(100px)', opacity: 0 }),
+                animate('1s', style({ transform: 'translateY(0)', opacity: 1 }))
+            ])
+        ])
+    ]
 })
 export class GameSelectorComponent {
     games$ = this.http.get<GamesCollection>('assets/games.json').pipe(
@@ -17,7 +27,10 @@ export class GameSelectorComponent {
         shareReplay(1)
     );
 
-    constructor(private http: HttpClient, private router: Router) {}
+    constructor(private http: HttpClient, private router: Router, private headerService: HeaderService) {
+        this.headerService.showASelect = true;
+        this.headerService.showRewindBack = false;
+    }
 
     onGameClick(game: Game, event?: Event) {
         if (event) {

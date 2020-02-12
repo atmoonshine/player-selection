@@ -1,5 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { GamepadService, XboxButtons } from 'src/gamepad.service';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { HeaderService } from '../header.service';
 
 class Player {
     gamepad: Gamepad | null = null;
@@ -9,7 +11,15 @@ class Player {
 @Component({
     selector: 'app-controller-select',
     templateUrl: './controller-select.component.html',
-    styleUrls: ['./controller-select.component.scss']
+    styleUrls: ['./controller-select.component.scss'],
+    animations: [
+        trigger('enterRemoveTrigger', [
+            transition(':enter', [
+                style({ transform: 'translateY(100px)', opacity: 0 }),
+                animate('1s', style({ transform: 'translateY(0)', opacity: 1 }))
+            ])
+        ])
+    ]
 })
 export class ControllerSelectComponent {
     players = new Array<Player>(
@@ -19,7 +29,10 @@ export class ControllerSelectComponent {
         new Player(4, XboxButtons.GamepadY)
     );
 
-    constructor(private gamepadService: GamepadService) {
+    constructor(private gamepadService: GamepadService, private headerService: HeaderService) {
+        this.headerService.showASelect = false;
+        this.headerService.showRewindBack = true;
+
         this.gamepadService.gamepadButtonPressed$.subscribe(({ gamepad, button }) => {
             if (this.players.some(p => p.gamepad && p.gamepad.index === gamepad.index)) return;
             const player = this.players.find(p => p.key === button);

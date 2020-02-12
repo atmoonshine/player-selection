@@ -72,6 +72,8 @@
             &.selected {
                 .oval {
                     fill: #6dd400;
+                    box-shadow: 0 0 34px 20px #4f3779;
+                    border-radius: 70px;
                 }
             }
         }

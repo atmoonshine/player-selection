@@ -1,5 +1,5 @@
 <div class="container">
-    <a [id]="game.platform" (keydown)="onGameKeyDown(game, $event)" class="game" *ngFor="let game of games$ | async" (click)="onGameClick(game, $event)" href="#">
+    <a [id]="game.platform" @enterRemoveTrigger (keydown)="onGameKeyDown(game, $event)" class="game" *ngFor="let game of games$ | async" (click)="onGameClick(game, $event)" href="#">
         <img [src]="game.imageUrl" srcset="{{game.imageUrl}}@2x.png 2x, {{game.imageUrl}}@3x 3x" />
     </a>
 </div>
