@@ -1,6 +1,6 @@
 <img class="controller-icon" src="assets/controller.svg" />
 <div class="container">
-    <a class="player" *ngFor="let player of players" [class.selected]="player.isReady">
+    <a class="player" @enterRemoveTrigger *ngFor="let player of players" [class.selected]="player.isReady">
         <img class="player-bkg" src="assets/player-select.png" srcset="assets/player-select@2x.png 2x, assets/player-select@3x.png 3x" />
         <img class="player-ctrl" src="assets/controller-partial.svg" />
         <div class="metadata">

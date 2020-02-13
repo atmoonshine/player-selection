@@ -4,6 +4,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { IpcService } from 'src/ipc.service';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { HeaderService } from '../header.service';
 
 class Player {
     gamepad: Gamepad | null = null;
@@ -13,7 +15,15 @@ class Player {
 @Component({
     selector: 'app-controller-select',
     templateUrl: './controller-select.component.html',
-    styleUrls: ['./controller-select.component.scss']
+    styleUrls: ['./controller-select.component.scss'],
+    animations: [
+        trigger('enterRemoveTrigger', [
+            transition(':enter', [
+                style({ transform: 'translateY(100px)', opacity: 0 }),
+                animate('1s', style({ transform: 'translateY(0)', opacity: 1 }))
+            ])
+        ])
+    ]
 })
 export class ControllerSelectComponent implements OnDestroy {
 
@@ -26,7 +36,13 @@ export class ControllerSelectComponent implements OnDestroy {
         new Player(4, XboxButtons.GamepadY)
     );
 
-    constructor(private gamepadService: GamepadService, private router: Router, private ipc: IpcService) {
+    constructor(
+      private gamepadService: GamepadService,
+      private headerService: HeaderService,
+      private router: Router,
+      private ipc: IpcService) {
+        this.headerService.showASelect = false;
+        this.headerService.showRewindBack = true;
 
         this.gamepadService.gamepadButtonPressed$.pipe(
           takeUntil(this.ngOnDestroy$)
@@ -35,16 +51,11 @@ export class ControllerSelectComponent implements OnDestroy {
 
               this.router.navigate(['/games']);
               return;
-            }
-
-
-            if (this.players.some(p => p.gamepad && p.gamepad.index === gamepad.index)) return;
-            const player = this.players.find(p => p.key === button);
-            if (player) this.assignGamepadToPlayer(player, gamepad);
-        });
+            }});
     }
 
     ngOnDestroy(): void {
+      // send change players on page exit
       this.ipc.send('change-players', this.players);
       this.ngOnDestroy$.next();
       this.ngOnDestroy$.complete();

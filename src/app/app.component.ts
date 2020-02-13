@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { GamepadService } from 'src/gamepad.service';
+import { HeaderService } from './header.service';
 
 @Component({
     selector: 'app-root',
@@ -7,7 +8,7 @@ import { GamepadService } from 'src/gamepad.service';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    constructor(private gamepadService: GamepadService) {
+    constructor(private gamepadService: GamepadService, public headerService: HeaderService) {
         this.gamepadService.initialize();
     }
 }
