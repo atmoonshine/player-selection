@@ -2,11 +2,19 @@
     "games": [
         {
             "platform": "COINOPS",
-            "imageUrl": "assets/coinops"
+            "imageUrl": "assets/coinops.png",
+            "command": {
+              "type": "ipc",
+              "arguments": ["launch", "c:\\CoinOps.exe"]
+            }
         },
         {
             "platform": "Controller Select",
-            "imageUrl": "assets/controller-select"
+            "imageUrl": "assets/controller-select.png",
+            "command": {
+              "type": "route",
+              "arguments": ["/controller-select"]
+            }
         }
     ]
 }
