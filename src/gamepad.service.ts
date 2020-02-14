@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, interval, Observable, fromEvent, Subject } from 'rxjs';
+import { interval, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 export declare const enum XboxButtons {
@@ -9,6 +9,10 @@ export declare const enum XboxButtons {
     GamepadX = 2,
     GamepadY = 3,
     GamepadRewind = 8,
+    GamepadUp = 12,
+    GamepadDown = 13,
+    GamepadLeft = 14,
+    GamepadRight = 15
 }
 
 @Injectable({ providedIn: 'root' })
@@ -22,14 +26,14 @@ export class GamepadService {
 
                 for (const entry of Object.entries(gamepad.buttons)) {
                     if (entry[1].pressed) {
-                        this.gamepadButtonPressedSubject$.next({ gamepad, button: parseInt(entry[0], 10)});
+                        this.gamepadButtonPressedSubject$.next({ gamepad, button: parseInt(entry[0], 10) });
                     }
                 }
             }
         })
     );
 
-    private gamepadButtonPressedSubject$ = new Subject<{ gamepad: Gamepad, button: XboxButtons}>();
+    private gamepadButtonPressedSubject$ = new Subject<{ gamepad: Gamepad; button: XboxButtons }>();
     gamepadButtonPressed$ = this.gamepadButtonPressedSubject$.asObservable();
 
     initialize() {

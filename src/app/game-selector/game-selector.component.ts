@@ -1,12 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {} from '@angular/common';
-import { shareReplay, map, tap } from 'rxjs/operators';
+import { shareReplay, map, tap, finalize, takeUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { GamesCollection, Game } from 'src/app/models/games-collection';
 import { Router } from '@angular/router';
 import { IpcService } from '../../ipc.service';
 import { HeaderService } from '../header.service';
 import { trigger, style, transition, animate } from '@angular/animations';
+import { GamepadService, XboxButtons } from 'src/gamepad.service';
+import { Subject } from 'rxjs';
+
+declare global {
+    interface Window {
+        SpatialNavigation: any;
+    }
+}
 
 @Component({
     selector: 'app-game-selector',
@@ -21,17 +29,60 @@ import { trigger, style, transition, animate } from '@angular/animations';
         ])
     ]
 })
-export class GameSelectorComponent {
+export class GameSelectorComponent implements OnDestroy {
+    ngOnDestroy$ = new Subject<void>();
+
     games$ = this.http.get<GamesCollection>('assets/games.json').pipe(
         map(collection => collection.games),
-        tap(() => window.setTimeout(() => document.getElementsByTagName('a')[0].focus())),
+        finalize(() => {
+            window.SpatialNavigation.uninit();
+        }),
         shareReplay(1)
     );
 
-
-    constructor(private http: HttpClient, private router: Router, private ipc: IpcService, private headerService: HeaderService) {
+    constructor(
+        private http: HttpClient,
+        private router: Router,
+        private ipc: IpcService,
+        private gamepadService: GamepadService,
+        private headerService: HeaderService
+    ) {
         this.headerService.showASelect = true;
         this.headerService.showRewindBack = false;
+
+        this.gamepadService.gamepadButtonPressed$
+            .pipe(
+                takeUntil(this.ngOnDestroy$),
+                tap(({ gamepad, button }) => {
+                    switch (button) {
+                        case XboxButtons.GamepadUp:
+                            window.SpatialNavigation.move('up');
+                            break;
+                        case XboxButtons.GamepadDown:
+                            window.SpatialNavigation.move('down');
+                            break;
+                        case XboxButtons.GamepadLeft:
+                            window.SpatialNavigation.move('left');
+                            break;
+                        case XboxButtons.GamepadRight:
+                            window.SpatialNavigation.move('right');
+                            break;
+                    }
+                })
+            )
+            .subscribe();
+    }
+
+    animationComplete() {
+        window.SpatialNavigation.init();
+
+        window.SpatialNavigation.add({
+            selector: 'a'
+        });
+
+        window.SpatialNavigation.makeFocusable();
+
+        window.SpatialNavigation.focus();
     }
 
     onGameClick(game: Game, event?: Event) {
@@ -40,28 +91,20 @@ export class GameSelectorComponent {
             event.stopPropagation();
         }
         switch (game.command.type) {
-          case 'ipc':
-              const [ channel ] = game.command.arguments;
-              this.ipc.send(channel, game);
-              break;
-          case 'route':
-              const [ route ] = game.command.arguments;
-              this.router.navigate([route]);
-              break;
-          default:
-
+            case 'ipc':
+                const [channel] = game.command.arguments;
+                this.ipc.send(channel, game);
+                break;
+            case 'route':
+                const [route] = game.command.arguments;
+                this.router.navigate([route]);
+                break;
+            default:
         }
     }
 
-    onGameKeyDown(game: Game, event: KeyboardEvent) {
-        if (event.key === 'ArrowRight' && game.platform === 'COINOPS') {
-            document.getElementById('Controller Select')?.focus();
-            return;
-        }
-
-        if (event.key === 'ArrowLeft' && game.platform === 'Controller Select') {
-            document.getElementById('COINOPS')?.focus();
-            return;
-        }
+    ngOnDestroy() {
+        this.ngOnDestroy$.next();
+        this.ngOnDestroy$.complete();
     }
 }

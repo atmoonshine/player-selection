@@ -26,8 +26,7 @@ class Player {
     ]
 })
 export class ControllerSelectComponent implements OnDestroy {
-
-  ngOnDestroy$ = new Subject<void>();
+    ngOnDestroy$ = new Subject<void>();
 
     players = new Array<Player>(
         new Player(1, XboxButtons.GamepadA),
@@ -37,28 +36,27 @@ export class ControllerSelectComponent implements OnDestroy {
     );
 
     constructor(
-      private gamepadService: GamepadService,
-      private headerService: HeaderService,
-      private router: Router,
-      private ipc: IpcService) {
+        private gamepadService: GamepadService,
+        private headerService: HeaderService,
+        private router: Router,
+        private ipc: IpcService
+    ) {
         this.headerService.showASelect = false;
         this.headerService.showRewindBack = true;
 
-        this.gamepadService.gamepadButtonPressed$.pipe(
-          takeUntil(this.ngOnDestroy$)
-          ).subscribe(({ gamepad, button }) => {
+        this.gamepadService.gamepadButtonPressed$.pipe(takeUntil(this.ngOnDestroy$)).subscribe(({ gamepad, button }) => {
             if (button === XboxButtons.GamepadRewind) {
-
-              this.router.navigate(['/games']);
-              return;
-            }});
+                this.router.navigate(['/games']);
+                return;
+            }
+        });
     }
 
     ngOnDestroy(): void {
-      // send change players on page exit
-      this.ipc.send('change-players', this.players);
-      this.ngOnDestroy$.next();
-      this.ngOnDestroy$.complete();
+        // send change players on page exit
+        this.ipc.send('change-players', this.players);
+        this.ngOnDestroy$.next();
+        this.ngOnDestroy$.complete();
     }
 
     // @HostListener('window:keydown', ['$event'])

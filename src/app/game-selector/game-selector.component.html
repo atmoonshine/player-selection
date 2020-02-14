@@ -1,5 +1,7 @@
-<div class="container">
-    <a [id]="game.platform" @enterRemoveTrigger (keydown)="onGameKeyDown(game, $event)" class="game" *ngFor="let game of games$ | async" (click)="onGameClick(game, $event)" href="#">
-        <img [src]="game.imageUrl" />
-    </a>
+<div class="content">
+    <div class="container" [@enterRemoveTrigger] (@enterRemoveTrigger.done)="animationComplete()">
+        <a [id]="game.platform" class="game" *ngFor="let game of games$ | async" (click)="onGameClick(game, $event)" href="#">
+            <img [src]="game.imageUrl" />
+        </a>
+    </div>
 </div>

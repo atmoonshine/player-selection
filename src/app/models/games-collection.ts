@@ -6,7 +6,7 @@ export interface Game {
     platform: string;
     imageUrl: string;
     command: {
-      type: 'ipc' | 'route'
-      arguments: string[];
+        type: 'ipc' | 'route';
+        arguments: string[];
     };
 }
