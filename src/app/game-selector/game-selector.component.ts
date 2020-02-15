@@ -34,9 +34,6 @@ export class GameSelectorComponent implements OnDestroy {
 
     games$ = this.http.get<GamesCollection>('assets/games.json').pipe(
         map(collection => collection.games),
-        finalize(() => {
-            window.SpatialNavigation.uninit();
-        }),
         shareReplay(1)
     );
 
@@ -75,13 +72,10 @@ export class GameSelectorComponent implements OnDestroy {
 
     animationComplete() {
         window.SpatialNavigation.init();
-
         window.SpatialNavigation.add({
             selector: 'a'
         });
-
         window.SpatialNavigation.makeFocusable();
-
         window.SpatialNavigation.focus();
     }
 
@@ -104,6 +98,7 @@ export class GameSelectorComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
+        window.SpatialNavigation.uninit();
         this.ngOnDestroy$.next();
         this.ngOnDestroy$.complete();
     }
