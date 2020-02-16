@@ -64,6 +64,12 @@ export class GameSelectorComponent implements OnDestroy {
                         case XboxButtons.GamepadRight:
                             window.SpatialNavigation.move('right');
                             break;
+                        case XboxButtons.GamepadA:
+                            const anchor = document.activeElement as HTMLElement;
+                            if (anchor && anchor.click) {
+                                anchor.click();
+                            }
+                            break;
                     }
                 })
             )

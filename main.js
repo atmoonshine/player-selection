@@ -14,6 +14,7 @@ function createWindow() {
             nodeIntegration: true
         }
     });
+    win.setMenuBarVisibility(false);
 
     ipcMain.on('launch', (_event, args) => {
         const [executablePath, ...parameters] = args.command.arguments;
@@ -33,8 +34,9 @@ function createWindow() {
     // load the dist folder from Angular
     win.loadURL(
         url.format({
-            pathname: path.join(__dirname, `/dist/ATGamesPicker/index.html`),
-            protocol: 'file:',
+            // pathname: path.join(__dirname, `/dist/ATGamesPicker/index.html`),
+            pathname: 'https://atmoonshine.github.io/player-selection/',
+            protocol: 'https:',
             slashes: true
         })
     );
