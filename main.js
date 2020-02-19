@@ -34,9 +34,9 @@ function createWindow() {
     // load the dist folder from Angular
     win.loadURL(
         url.format({
-            // pathname: path.join(__dirname, `/dist/ATGamesPicker/index.html`),
-            pathname: 'https://atmoonshine.github.io/player-selection/',
-            protocol: 'https:',
+            pathname: path.join(__dirname, `/dist/ATGamesPicker/index.html`),
+            // pathname: 'https://atmoonshine.github.io/player-selection/',
+            protocol: 'file:',
             slashes: true
         })
     );

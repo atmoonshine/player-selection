@@ -13,21 +13,17 @@ export class IpcService {
                 throw e;
             }
         } else {
-            console.warn("Electron's IPC was not loaded");
+            console.warn(`Electron's IPC was not loaded`);
         }
     }
 
     public on(channel: string, listener: any): void {
-        if (!this.ipc) {
-            return;
-        }
+        if (!this.ipc) return;
         this.ipc.on(channel, listener);
     }
 
     public send(channel: string, ...args: any[]): void {
-        if (!this.ipc) {
-            return;
-        }
+        if (!this.ipc) return;
         this.ipc.send(channel, ...args);
     }
 }

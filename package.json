@@ -26,7 +26,6 @@
     "@angular/platform-browser": "~9.0.0",
     "@angular/platform-browser-dynamic": "~9.0.0",
     "@angular/router": "~9.0.0",
-    "@schuchard/prettier": "^3.1.0",
     "rxjs": "~6.5.3",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
@@ -44,7 +43,6 @@
     "codelyzer": "^5.1.2",
     "electron": "^8.0.0",
     "electron-packager": "^14.2.0",
-    "husky": "4.2.3",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.3.0",
@@ -59,16 +57,5 @@
     "tslint": "~5.18.0",
     "tslint-config-prettier": "1.18.0",
     "typescript": "^3.7.5"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,json,css,scss,less,md,ts,html,component.html}": [
-      "prettier --write",
-      "git add"
-    ]
   }
 }

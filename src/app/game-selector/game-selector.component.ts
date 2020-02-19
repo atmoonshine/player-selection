@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import {} from '@angular/common';
-import { shareReplay, map, tap, finalize, takeUntil } from 'rxjs/operators';
+import { shareReplay, map, tap, takeUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { GamesCollection, Game } from 'src/app/models/games-collection';
 import { Router } from '@angular/router';
@@ -9,12 +9,6 @@ import { HeaderService } from '../header.service';
 import { trigger, style, transition, animate } from '@angular/animations';
 import { GamepadService, XboxButtons } from 'src/gamepad.service';
 import { Subject } from 'rxjs';
-
-declare global {
-    interface Window {
-        SpatialNavigation: any;
-    }
-}
 
 @Component({
     selector: 'app-game-selector',
@@ -53,16 +47,16 @@ export class GameSelectorComponent implements OnDestroy {
                 tap(({ gamepad, button }) => {
                     switch (button) {
                         case XboxButtons.GamepadUp:
-                            window.SpatialNavigation.move('up');
+                            // window.SpatialNavigation.move('up');
                             break;
                         case XboxButtons.GamepadDown:
-                            window.SpatialNavigation.move('down');
+                            // window.SpatialNavigation.move('down');
                             break;
                         case XboxButtons.GamepadLeft:
-                            window.SpatialNavigation.move('left');
+                            // window.SpatialNavigation.move('left');
                             break;
                         case XboxButtons.GamepadRight:
-                            window.SpatialNavigation.move('right');
+                            // window.SpatialNavigation.move('right');
                             break;
                         case XboxButtons.GamepadA:
                             const anchor = document.activeElement as HTMLElement;
@@ -77,12 +71,12 @@ export class GameSelectorComponent implements OnDestroy {
     }
 
     animationComplete() {
-        window.SpatialNavigation.init();
-        window.SpatialNavigation.add({
-            selector: 'a'
-        });
-        window.SpatialNavigation.makeFocusable();
-        window.SpatialNavigation.focus();
+        // window.SpatialNavigation.init();
+        // window.SpatialNavigation.add({
+        //     selector: 'a'
+        // });
+        // window.SpatialNavigation.makeFocusable();
+        // window.SpatialNavigation.focus();
     }
 
     onGameClick(game: Game, event?: Event) {
@@ -104,7 +98,7 @@ export class GameSelectorComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
-        window.SpatialNavigation.uninit();
+        // window.SpatialNavigation.uninit();
         this.ngOnDestroy$.next();
         this.ngOnDestroy$.complete();
     }
