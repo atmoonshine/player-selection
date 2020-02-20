@@ -4,10 +4,18 @@
     align-items: center;
     height: 100%;
 
-    .controller-icon {
-        position: absolute;
-        top: 30px;
-        left: 50px;
+    .title {
+        width: 100%;
+        height: 53px;
+        font-family: Lato;
+        font-size: 24px;
+        font-weight: 900;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: center;
+        color: #ffffff;
     }
 
     .container {
@@ -18,72 +26,46 @@
         align-items: center;
 
         .player {
-            width: 762px;
-            height: 368px;
+            width: 805px;
+            height: 418px;
+            border-radius: 5px;
+            box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+            border: solid 3px #041421;
+            background-image: linear-gradient(to bottom, #0a1f30 10%, #040e16 71%);
             margin: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             position: relative;
             color: white;
             text-align: center;
 
-            .player-ctrl {
+            h1 {
                 position: absolute;
-                left: 0;
-                font-size: 40px;
+                width: 805px;
+                font-size: 21px;
+                font-weight: 900;
+                letter-spacing: 2.75px;
+                top: 14px;
             }
 
-            .player-bkg {
+            .joystick {
                 position: absolute;
-                z-index: -1;
+                left: 46px;
+                top: 75px;
             }
 
-            .oval {
-                fill: white;
-            }
-
-            .metadata {
+            .buttons {
                 position: absolute;
-                left: 405px;
-                top: 47px;
-
-                h1 {
-                    font-size: 38px;
-                    font-weight: 900;
-                    letter-spacing: 5px;
-                    margin: 0;
-                }
-
-                h2 {
-                    font-size: 28px;
-                    letter-spacing: 3.68px;
-                    margin: 0 0 16px 0;
-                }
-
-                h3 {
-                    font-size: 32px;
-                    font-weight: 900;
-                    letter-spacing: 4.21px;
-                    margin-top: 10px;
-                }
+                top: 87px;
+                right: 93px;
             }
 
             &.selected {
-                .oval {
-                    fill: #6dd400;
-                    box-shadow: 0 0 34px 20px #4f3779;
-                    border-radius: 70px;
-                    animation: glow 2s infinite alternate;
-
-                    @keyframes glow {
-                        from {
-                            box-shadow: 0 0 10px 10px #4f3779;
-                        }
-                        to {
-                            box-shadow: 0 0 34px 20px #4f3779;
-                        }
-                    }
+                .buttons {
+                    width: 94px;
+                    height: 121.6px;
+                    transform: rotate(16deg);
+                    box-shadow: 0 0 12px 10px #00ca17;
+                    border: solid 3px #f5f041;
+                    background-color: rgba(255, 255, 255, 0);
                 }
             }
         }

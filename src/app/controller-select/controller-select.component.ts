@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, HostListener } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { GamepadService } from '../core/gamepad.service';
 import { HeaderService } from '../core/header.service';
 import { IpcService } from '../core/ipc.service';
 import { VirtualKeys } from '../core/virtual-keys';
+import { VirtualKeyService } from '../core/virtual-key.service';
 
 class Player {
     gamepad: Gamepad | null = null;
@@ -27,6 +28,7 @@ class Player {
     ]
 })
 export class ControllerSelectComponent implements OnDestroy {
+    VirtualKeys = VirtualKeys;
     ngOnDestroy$ = new Subject<void>();
 
     players = new Array<Player>(
@@ -37,6 +39,7 @@ export class ControllerSelectComponent implements OnDestroy {
     );
 
     constructor(
+        private keyService: VirtualKeyService,
         private gamepadService: GamepadService,
         private headerService: HeaderService,
         private router: Router,
@@ -49,8 +52,27 @@ export class ControllerSelectComponent implements OnDestroy {
             if (button === VirtualKeys.Back) {
                 this.router.navigate(['/games']);
                 return;
+            } else {
+                if (this.players.some(p => p.gamepad?.id === gamepad.id)) return;
+                const player = this.players.find(p => p.key === button);
+                if (player) this.assignGamepadToPlayer(player, gamepad);
             }
         });
+    }
+
+    @HostListener('window:keydown', ['$event'])
+    onKeyDown(event: KeyboardEvent) {
+        const key = this.keyService.translateKeyToDirection(event);
+
+        if (key === VirtualKeys.Unknown) return;
+        const player = this.players.find(p => p.key === key);
+
+        // here we're faking a controller, so that people with a keyboard can use the app
+
+        // don't let the keyboard bind to more than one user
+        if (this.players.some(p => p.isReady && !p.gamepad)) return;
+
+        if (player) this.assignGamepadToPlayer(player, null);
     }
 
     ngOnDestroy(): void {
