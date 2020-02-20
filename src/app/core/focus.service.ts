@@ -139,7 +139,9 @@ export class FocusService {
         tap(([direction, disabled]) => {
             const activeElementPath = document.activeElement?.attributes.getNamedItem('focusPath')?.value;
 
-            if (activeElementPath) {
+            if (!activeElementPath && this.focusableElements.size) {
+                (this.focusableElements.values().next().value as Focusable).element.focus();
+            } else if (activeElementPath) {
                 // tslint:disable-next-line: no-non-null-assertion
                 const activeFocusable = this.focusableElements.get(activeElementPath)!;
                 const sourceRect = activeFocusable.element.getBoundingClientRect();
