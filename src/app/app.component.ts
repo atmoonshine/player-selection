@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { GamepadService } from 'src/gamepad.service';
-import { HeaderService } from './header.service';
+import { FocusService } from './core/focus.service';
+import { GamepadService } from './core/gamepad.service';
+import { HeaderService } from './core/header.service';
 
 @Component({
     selector: 'app-root',
@@ -8,7 +9,8 @@ import { HeaderService } from './header.service';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    constructor(private gamepadService: GamepadService, public headerService: HeaderService) {
+    constructor(private focusService: FocusService, private gamepadService: GamepadService, public headerService: HeaderService) {
+        this.focusService.initialize();
         this.gamepadService.initialize();
     }
 }
