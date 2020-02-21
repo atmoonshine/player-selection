@@ -3,7 +3,10 @@ const path = require('path');
 const url = require('url');
 const { ipcMain } = require('electron');
 const child = require('child_process').execFile;
+const log = require('electron-log');
+const ffi = require('ffi-napi');
 
+let LAM = null;
 let win;
 
 function createWindow() {
@@ -53,11 +56,46 @@ function createWindow() {
 
 app.on('ready', createWindow);
 
-// on macOS, closing the window doesn't quit the app
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
+//LAM = ffi.Library(__dirname + '\\..\\..\\lib\\GameLobbyMediator.dll', {
+LAM = ffi.Library(__dirname + '\\lib\\GameLobbyMediator.dll', {
+    LAM_Init: ['bool', ['string']],
+    LAM_Finalize: ['void', []],
+    LAM_StartToReassignController: ['void', []],
+    LAM_ReassignControllerDone: ['void', []],
+    LAM_RegisterControllerMapUpdateCB: ['void', ['pointer']]
+});
+
+var callback = ffi.Callback('void', ['string'], function(controllerMap) {
+    log.info('controllerMap: ', controllerMap);
+    mainWindow.webContents.send('UpdateControllerMap', controllerMap);
+});
+
+LAM.LAM_Init('LobbyApp');
+
+log.info('registering the callback');
+LAM.LAM_RegisterControllerMapUpdateCB(callback);
+log.info('done');
+
+process.on('exit', function() {
+    callback;
+});
+
+log.info('end');
+
+ipcMain.on('StartToReassignController', () => {
+    LAM.LAM_StartToReassignController();
+});
+
+ipcMain.on('CloseToReassignController', () => {
+    LAM.LAM_ReassignControllerDone();
+});
+
+// Quit when all windows are closed.
+app.on('window-all-closed', function() {
+    // On macOS it is common for applications and their menu bar
+    // to stay active until the user quits explicitly with Cmd + Q
+    LAM.LAM_Finalize();
+    if (process.platform !== 'darwin') app.quit();
 });
 
 // initialize the app's main window

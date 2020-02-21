@@ -1,7 +1,6 @@
 import { Component, OnDestroy, HostListener } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { GamepadService } from '../core/gamepad.service';
 import { HeaderService } from '../core/header.service';
@@ -42,21 +41,15 @@ export class ControllerSelectComponent implements OnDestroy {
         private keyService: VirtualKeyService,
         private gamepadService: GamepadService,
         private headerService: HeaderService,
-        private router: Router,
         private ipc: IpcService
     ) {
         this.headerService.showASelect = false;
         this.headerService.showRewindBack = true;
 
         this.gamepadService.gamepadButtonPressed$.pipe(takeUntil(this.ngOnDestroy$)).subscribe(({ gamepad, button }) => {
-            if (button === VirtualKeys.Back) {
-                this.router.navigate(['/games']);
-                return;
-            } else {
-                if (this.players.some(p => p.gamepad?.id === gamepad.id)) return;
-                const player = this.players.find(p => p.key === button);
-                if (player) this.assignGamepadToPlayer(player, gamepad);
-            }
+            if (this.players.some(p => p.gamepad?.id === gamepad.id)) return;
+            const player = this.players.find(p => p.key === button);
+            if (player) this.assignGamepadToPlayer(player, gamepad);
         });
     }
 
