@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { VirtualKeyService } from './virtual-key.service';
 
-import { fromEvent, EMPTY, BehaviorSubject, interval, merge } from 'rxjs';
+import { fromEvent, EMPTY, BehaviorSubject, interval, merge, Subject } from 'rxjs';
 import { tap, catchError, withLatestFrom, filter, map, pluck } from 'rxjs/operators';
 import { Focusable } from '../shared/focusable.directive';
 import { GamepadService } from './gamepad.service';
@@ -122,10 +122,16 @@ export class FocusService {
 
     disabled$ = new BehaviorSubject(false);
 
+    closeRequested$ = new Subject<void>();
+
     keyDown$ = merge(
         fromEvent<KeyboardEvent>(window, 'keydown').pipe(
             map(event => {
-                const direction = this.keyService.translateKeyToDirection(event);
+                let direction = this.keyService.eventToVirtualKey(event);
+
+                const validDirections = [VirtualKeys.Up, VirtualKeys.Down, VirtualKeys.Left, VirtualKeys.Right, VirtualKeys.Back];
+
+                if (!validDirections.includes(direction)) direction = VirtualKeys.Unknown;
 
                 if (!event.defaultPrevented && direction !== VirtualKeys.Unknown) event.preventDefault();
 
@@ -137,6 +143,11 @@ export class FocusService {
         withLatestFrom(this.disabled$),
         filter(([virtualKey, disabled]) => virtualKey !== VirtualKeys.Unknown && !disabled),
         tap(([direction, disabled]) => {
+            if (direction === VirtualKeys.Back) {
+                this.closeRequested$.next();
+                return;
+            }
+
             const activeElementPath = document.activeElement?.attributes.getNamedItem('focusPath')?.value;
 
             if (!activeElementPath && this.focusableElements.size) {

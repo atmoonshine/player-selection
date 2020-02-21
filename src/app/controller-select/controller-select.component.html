@@ -5,35 +5,15 @@
         <div>
             <h1 *ngIf="!player.isReady">PRESS ({{ VirtualKeys[player.key] }}) FOR PLAYER {{ player.playerNumber }}</h1>
             <h1 *ngIf="player.isReady">SUCCESS!</h1>
-            <img
-                class="joystick"
-                src="assets/images/joystick.png"
-                srcset="assets/images/joystick@2x.png 2x, assets/images/joystick@3x.png 3x"
-            />
-            <img
-                *ngIf="player.key === VirtualKeys.A"
-                src="assets/images/a-button-select-pink.png"
-                srcset="assets/images/a-button-select-pink@2x.png 2x, assets/images/a-button-select-pink@3x.png 3x"
-                class="buttons"
-            />
-            <img
-                *ngIf="player.key === VirtualKeys.B"
-                src="assets/images/b-button-select-pink.png"
-                srcset="assets/images/b-button-select-pink@2x.png 2x, assets/images/b-button-select-pink@3x.png 3x"
-                class="buttons"
-            />
-            <img
-                *ngIf="player.key === VirtualKeys.X"
-                src="assets/images/x-button-select-pink.png"
-                srcset="assets/images/x-button-select-pink@2x.png 2x, assets/images/x-button-select-pink@3x.png 3x"
-                class="buttons"
-            />
-            <img
-                *ngIf="player.key === VirtualKeys.Y"
-                src="assets/images/y-button-select-pink.png"
-                srcset="assets/images/y-button-select-pink@2x.png 2x, assets/images/y-button-select-pink@3x.png 3x"
-                class="buttons"
-            />
+            <img class="joystick" src="assets/images/joystick.png" />
+            <img *ngIf="player.key === VirtualKeys.A" src="assets/images/a-button-select-pink.png" class="buttons" />
+            <img *ngIf="player.key === VirtualKeys.A" [style.opacity]="player.isReady ? 1 : 0" src="assets/images/a-button-select-green.png" class="buttons" />
+            <img *ngIf="player.key === VirtualKeys.B" src="assets/images/b-button-select-pink.png" class="buttons" />
+            <img *ngIf="player.key === VirtualKeys.B" [style.opacity]="player.isReady ? 1 : 0" src="assets/images/b-button-select-green.png" class="buttons" />
+            <img *ngIf="player.key === VirtualKeys.X" src="assets/images/x-button-select-pink.png" class="buttons" />
+            <img *ngIf="player.key === VirtualKeys.X" [style.opacity]="player.isReady ? 1 : 0" src="assets/images/x-button-select-green.png" class="buttons" />
+            <img *ngIf="player.key === VirtualKeys.Y" src="assets/images/y-button-select-pink.png" class="buttons" />
+            <img *ngIf="player.key === VirtualKeys.Y" [style.opacity]="player.isReady ? 1 : 0" src="assets/images/y-button-select-green.png" class="buttons" />
         </div>
     </a>
 </div>
