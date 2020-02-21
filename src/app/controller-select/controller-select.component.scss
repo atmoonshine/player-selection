@@ -56,17 +56,8 @@
                 position: absolute;
                 top: 87px;
                 right: 93px;
-            }
-
-            &.selected {
-                .buttons {
-                    width: 94px;
-                    height: 121.6px;
-                    transform: rotate(16deg);
-                    box-shadow: 0 0 12px 10px #00ca17;
-                    border: solid 3px #f5f041;
-                    background-color: rgba(255, 255, 255, 0);
-                }
+                width: 280px;
+                height: 260px;
             }
         }
     }
