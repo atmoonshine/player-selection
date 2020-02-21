@@ -10,7 +10,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
-const routes: Routes = [{ path: '', pathMatch: 'full', redirectTo: 'games' }];
+const routes: Routes = [{ path: '', pathMatch: 'full', redirectTo: 'controller-select' }];
 
 @NgModule({
     declarations: [AppComponent],

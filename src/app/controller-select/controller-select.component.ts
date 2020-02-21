@@ -1,4 +1,4 @@
-import { Component, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnDestroy, HostListener, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -31,6 +31,8 @@ export class ControllerSelectComponent implements OnDestroy {
     VirtualKeys = VirtualKeys;
     ngOnDestroy$ = new Subject<void>();
 
+    debugMessage = 'Debug messages appear here.';
+
     players = new Array<Player>(
         new Player(1, VirtualKeys.A),
         new Player(2, VirtualKeys.B),
@@ -50,7 +52,8 @@ export class ControllerSelectComponent implements OnDestroy {
 
         this.gamepadService.gamepadButtonPressed$.pipe(takeUntil(this.ngOnDestroy$)).subscribe(({ gamepad, button }) => {
             if (button === VirtualKeys.Back) {
-                this.router.navigate(['/games']);
+                // this.router.navigate(['/games']);
+                this.ipc.send('CloseToReassignControllerAndExit');
                 return;
             } else {
                 if (this.players.some(p => p.gamepad?.id === gamepad.id)) return;
@@ -58,6 +61,8 @@ export class ControllerSelectComponent implements OnDestroy {
                 if (player) this.assignGamepadToPlayer(player, gamepad);
             }
         });
+
+        this.ipc.on('UpdateControllerMap', this.onControllerUpdate);
     }
 
     @HostListener('window:keydown', ['$event'])
@@ -75,9 +80,14 @@ export class ControllerSelectComponent implements OnDestroy {
         if (player) this.assignGamepadToPlayer(player, null);
     }
 
+    onControllerUpdate = (event: any, message: string) => {
+        this.debugMessage = message;
+    };
+
     ngOnDestroy(): void {
-        // send change players on page exit
-        this.ipc.send('change-players', this.players);
+        // CloseToReassignController
+        this.ipc.send('CloseToReassignController');
+        this.ipc.off('UpdateControllerMap', this.onControllerUpdate);
         this.ngOnDestroy$.next();
         this.ngOnDestroy$.complete();
     }

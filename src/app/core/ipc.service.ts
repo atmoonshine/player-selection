@@ -22,6 +22,11 @@ export class IpcService {
         this.ipc.on(channel, listener);
     }
 
+    public off(channel: string, listener: any): void {
+        if (!this.ipc) return;
+        this.ipc.off(channel, listener);
+    }
+
     public send(channel: string, ...args: any[]): void {
         if (!this.ipc) return;
         this.ipc.send(channel, ...args);

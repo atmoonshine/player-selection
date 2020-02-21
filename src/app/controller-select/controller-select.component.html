@@ -1,5 +1,6 @@
 <div class="container">
     <div class="title">CHOOSE YOUR PLAYER</div>
+    <div class="debug">{{ debugMessage }}</div>
     <a class="player" @enterRemoveTrigger *ngFor="let player of players" [class.selected]="player.isReady">
         <div>
             <h1 *ngIf="!player.isReady">PRESS ({{ VirtualKeys[player.key] }}) FOR PLAYER {{ player.playerNumber }}</h1>

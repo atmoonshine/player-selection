@@ -4,6 +4,16 @@ const url = require('url');
 const { ipcMain } = require('electron');
 const child = require('child_process').execFile;
 
+const log = require('electron-log');
+let ffi;
+let LAM;
+
+var isWin = process.platform === 'win32';
+
+if (isWin) {
+    ffi = require('ffi-napi');
+}
+
 let win;
 
 function createWindow() {
@@ -26,9 +36,8 @@ function createWindow() {
         });
     });
 
-    ipcMain.on('change-players', (_event, args) => {
-        const readyPlayers = args.filter(player => !!player.gamepad);
-        console.log('change-players', readyPlayers);
+    ipcMain.on('exit', (_event, args) => {
+        process.exit(0);
     });
 
     // load the dist folder from Angular
@@ -49,12 +58,50 @@ function createWindow() {
     win.on('closed', () => {
         win = null;
     });
+
+    // GameLobbyMediator integration
+    if (isWin) {
+        LAM = ffi.Library(__dirname + '\\lib\\GameLobbyMediator.dll', {
+            LAM_Init: ['bool', ['string']],
+            LAM_Finalize: ['void', []],
+            LAM_StartToReassignController: ['void', []],
+            LAM_ReassignControllerDone: ['void', []],
+            LAM_RegisterControllerMapUpdateCB: ['void', ['pointer']]
+        });
+
+        const callback = ffi.Callback('void', ['string'], function(controllerMap) {
+            log.info('controllerMap: ', controllerMap);
+            mainWindow.webContents.send('UpdateControllerMap', controllerMap);
+        });
+
+        LAM.LAM_Init('LobbyApp');
+
+        log.info('registering the callback');
+        LAM.LAM_RegisterControllerMapUpdateCB(callback);
+        log.info('done');
+
+        ipcMain.on('StartToReassignController', () => {
+            LAM.LAM_StartToReassignController();
+        });
+
+        ipcMain.on('CloseToReassignController', () => {
+            LAM.LAM_ReassignControllerDone();
+        });
+
+        ipcMain.on('CloseToReassignControllerAndExit', () => {
+            LAM.LAM_ReassignControllerDone();
+            process.exit(0);
+        });
+    }
 }
 
 app.on('ready', createWindow);
 
 // on macOS, closing the window doesn't quit the app
 app.on('window-all-closed', () => {
+    if (isWin) {
+        LAM.LAM_Finalize();
+    }
     if (process.platform !== 'darwin') {
         app.quit();
     }
