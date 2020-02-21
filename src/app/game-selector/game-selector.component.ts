@@ -1,20 +1,15 @@
 import { Component, OnDestroy } from '@angular/core';
 import {} from '@angular/common';
-import { shareReplay, map, tap, finalize, takeUntil } from 'rxjs/operators';
+import { shareReplay, map, tap, takeUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { GamesCollection, Game } from 'src/app/models/games-collection';
 import { Router } from '@angular/router';
-import { IpcService } from '../../ipc.service';
-import { HeaderService } from '../header.service';
 import { trigger, style, transition, animate } from '@angular/animations';
-import { GamepadService, XboxButtons } from 'src/gamepad.service';
 import { Subject } from 'rxjs';
-
-declare global {
-    interface Window {
-        SpatialNavigation: any;
-    }
-}
+import { GamesCollection, Game } from '../shared/models/games-collection';
+import { IpcService } from '../core/ipc.service';
+import { GamepadService } from '../core/gamepad.service';
+import { HeaderService } from '../core/header.service';
+import { VirtualKeys } from '../core/virtual-keys';
 
 @Component({
     selector: 'app-game-selector',
@@ -52,19 +47,7 @@ export class GameSelectorComponent implements OnDestroy {
                 takeUntil(this.ngOnDestroy$),
                 tap(({ gamepad, button }) => {
                     switch (button) {
-                        case XboxButtons.GamepadUp:
-                            window.SpatialNavigation.move('up');
-                            break;
-                        case XboxButtons.GamepadDown:
-                            window.SpatialNavigation.move('down');
-                            break;
-                        case XboxButtons.GamepadLeft:
-                            window.SpatialNavigation.move('left');
-                            break;
-                        case XboxButtons.GamepadRight:
-                            window.SpatialNavigation.move('right');
-                            break;
-                        case XboxButtons.GamepadA:
+                        case VirtualKeys.A:
                             const anchor = document.activeElement as HTMLElement;
                             if (anchor && anchor.click) {
                                 anchor.click();
@@ -74,15 +57,6 @@ export class GameSelectorComponent implements OnDestroy {
                 })
             )
             .subscribe();
-    }
-
-    animationComplete() {
-        window.SpatialNavigation.init();
-        window.SpatialNavigation.add({
-            selector: 'a'
-        });
-        window.SpatialNavigation.makeFocusable();
-        window.SpatialNavigation.focus();
     }
 
     onGameClick(game: Game, event?: Event) {
@@ -104,7 +78,6 @@ export class GameSelectorComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
-        window.SpatialNavigation.uninit();
         this.ngOnDestroy$.next();
         this.ngOnDestroy$.complete();
     }

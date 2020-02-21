@@ -17,7 +17,7 @@
             }
         },
         {
-            "platform": "Controller Select",
+            "platform": "Controller Select2",
             "imageUrl": "assets/images/controller-select.png",
             "command": {
                 "type": "route",
@@ -25,7 +25,7 @@
             }
         },
         {
-            "platform": "Controller Select",
+            "platform": "Controller Select3",
             "imageUrl": "assets/images/controller-select.png",
             "command": {
                 "type": "route",
