@@ -1,12 +1,25 @@
 import { Injectable } from '@angular/core';
-import { interval, Subject } from 'rxjs';
+import { interval, Subject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { VirtualKeys } from './virtual-keys';
 import { VirtualKeyService } from './virtual-key.service';
 
+import { NgZone } from '@angular/core';
+
+function enterZone(zone: NgZone) {
+    return <T>(source: Observable<T>) =>
+        new Observable<T>(observer =>
+            source.subscribe({
+                next: x => zone.run(() => observer.next(x)),
+                error: err => observer.error(err),
+                complete: () => observer.complete()
+            })
+        );
+}
+
 @Injectable({ providedIn: 'root' })
 export class GamepadService {
-    private readonly minAxisChange = .5;
+    private readonly minAxisChange = 0.5;
 
     private scanTimer$ = interval(100).pipe(
         tap(() => {
@@ -72,9 +85,9 @@ export class GamepadService {
     );
 
     private gamepadButtonPressedSubject$ = new Subject<{ gamepad: Gamepad; button: VirtualKeys }>();
-    gamepadButtonPressed$ = this.gamepadButtonPressedSubject$.asObservable();
+    gamepadButtonPressed$ = this.gamepadButtonPressedSubject$.asObservable().pipe(enterZone(this.zone));
 
-    constructor(private keyService: VirtualKeyService) {}
+    constructor(private keyService: VirtualKeyService, private zone: NgZone) {}
 
     initialize() {
         this.scanTimer$.subscribe();
