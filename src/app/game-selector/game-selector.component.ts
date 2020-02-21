@@ -1,10 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import {} from '@angular/common';
-import { shareReplay, map, tap, takeUntil } from 'rxjs/operators';
+import { shareReplay, map, tap, takeUntil, skip, skipUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { trigger, style, transition, animate } from '@angular/animations';
-import { Subject } from 'rxjs';
+import { Subject, timer } from 'rxjs';
 import { GamesCollection, Game } from '../shared/models/games-collection';
 import { IpcService } from '../core/ipc.service';
 import { GamepadService } from '../core/gamepad.service';
@@ -45,6 +45,7 @@ export class GameSelectorComponent implements OnDestroy {
         this.gamepadService.gamepadButtonPressed$
             .pipe(
                 takeUntil(this.ngOnDestroy$),
+                skipUntil(timer(2000)), // skip to avoid the button A from page transition
                 tap(({ gamepad, button }) => {
                     switch (button) {
                         case VirtualKeys.A:
