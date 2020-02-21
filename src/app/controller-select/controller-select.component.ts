@@ -62,9 +62,9 @@ export class ControllerSelectComponent implements OnDestroy {
 
     @HostListener('window:keydown', ['$event'])
     onKeyDown(event: KeyboardEvent) {
-        const key = this.keyService.translateKeyToDirection(event);
-
-        if (key === VirtualKeys.Unknown) return;
+        const key = this.keyService.eventToVirtualKey(event);
+        const validKeys = [VirtualKeys.A, VirtualKeys.B, VirtualKeys.X, VirtualKeys.Y];
+        if (!validKeys.includes(key)) return;
         const player = this.players.find(p => p.key === key);
 
         // here we're faking a controller, so that people with a keyboard can use the app

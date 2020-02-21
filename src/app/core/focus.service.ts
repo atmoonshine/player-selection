@@ -125,7 +125,10 @@ export class FocusService {
     keyDown$ = merge(
         fromEvent<KeyboardEvent>(window, 'keydown').pipe(
             map(event => {
-                const direction = this.keyService.translateKeyToDirection(event);
+                let direction = this.keyService.eventToVirtualKey(event);
+                const validDirections = [VirtualKeys.Up, VirtualKeys.Down, VirtualKeys.Left, VirtualKeys.Right];
+
+                if (!validDirections.includes(direction)) direction = VirtualKeys.Unknown;
 
                 if (!event.defaultPrevented && direction !== VirtualKeys.Unknown) event.preventDefault();
 

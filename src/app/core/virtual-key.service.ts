@@ -3,7 +3,7 @@ import { VirtualKeys } from './virtual-keys';
 
 @Injectable({ providedIn: 'root' })
 export class VirtualKeyService {
-    translateKeyToDirection(keyEvent: KeyboardEvent): VirtualKeys {
+    eventToVirtualKey(keyEvent: KeyboardEvent): VirtualKeys {
         // tslint:disable-next-line: deprecation
         switch (keyEvent.keyCode) {
             case 39:
@@ -20,6 +20,14 @@ export class VirtualKeyService {
                 return VirtualKeys.Down;
             case 8:
                 return VirtualKeys.Back;
+            case 65:
+                return VirtualKeys.A;
+            case 66:
+                return VirtualKeys.B;
+            case 88:
+                return VirtualKeys.X;
+            case 89:
+                return VirtualKeys.Y;
             default:
                 return VirtualKeys.Unknown;
         }
