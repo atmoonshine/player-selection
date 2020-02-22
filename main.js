@@ -81,14 +81,17 @@ function createWindow() {
         log.info('done');
 
         ipcMain.on('StartToReassignController', () => {
+            log.info('StartToReassignController');
             LAM.LAM_StartToReassignController();
         });
 
         ipcMain.on('CloseToReassignController', () => {
+            log.info('CloseToReassignController');
             LAM.LAM_ReassignControllerDone();
         });
 
         ipcMain.on('CloseToReassignControllerAndExit', () => {
+            log.info('CloseToReassignControllerAndExit');
             LAM.LAM_ReassignControllerDone();
             process.exit(0);
         });
