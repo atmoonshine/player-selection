@@ -17,4 +17,11 @@ export class ResolutionComponent {
     constructor(private headerService: HeaderService) {
         this.headerService.showRewindBack = true;
     }
+
+    changeResolution(resolution: Resolution) {
+        // TODO: send ipc event
+
+        console.log(`New resolution: ${resolution}`);
+        this.selectedResolution$.next(resolution);
+    }
 }
