@@ -31,7 +31,7 @@ export class ControllerSelectComponent implements OnDestroy {
     VirtualKeys = VirtualKeys;
     ngOnDestroy$ = new Subject<void>();
 
-    debugMessage = 'Debug messages appear here.';
+    debugMessage = '';
 
     players = new Array<Player>(
         new Player(1, VirtualKeys.A),
@@ -80,7 +80,14 @@ export class ControllerSelectComponent implements OnDestroy {
     }
 
     onControllerUpdate = (event: any, message: string) => {
+        // [session:user:slot] => [0:0:1]
         this.debugMessage = message;
+
+        const match = message.match(/\[(\d+):(\d+):(\d+)\]/);
+        if (match && match.length === 4) {
+            const [_, session, user, slot] = match;
+            this.debugMessage = `User ${user + 1} is now player ${slot + 1}`;
+        }
     };
 
     ngOnDestroy(): void {
