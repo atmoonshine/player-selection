@@ -50,13 +50,8 @@ export class ControllerSelectComponent implements OnDestroy {
         this.headerService.showASelect = false;
         this.headerService.showRewindBack = true;
 
-        this.gamepadService.gamepadButtonPressed$.pipe(takeUntil(this.ngOnDestroy$)).subscribe(({ gamepad, button }) => {
-            if (this.players.some(p => p.gamepad?.id === gamepad.id)) return;
-            const player = this.players.find(p => p.key === button);
-            if (player) this.assignGamepadToPlayer(player, gamepad);
-        });
-
         this.focusService.closeRequested$.pipe(takeUntil(this.ngOnDestroy$)).subscribe(() => {
+            this.ipc.off('UpdateControllerMap', this.onControllerUpdate);
             this.ipc.send('CloseToReassignControllerAndExit');
         });
 
@@ -64,20 +59,20 @@ export class ControllerSelectComponent implements OnDestroy {
         this.ipc.send('StartToReassignController');
     }
 
-    @HostListener('window:keydown', ['$event'])
-    onKeyDown(event: KeyboardEvent) {
-        const key = this.keyService.eventToVirtualKey(event);
-        const validKeys = [VirtualKeys.A, VirtualKeys.B, VirtualKeys.X, VirtualKeys.Y];
-        if (!validKeys.includes(key)) return;
-        const player = this.players.find(p => p.key === key);
+    // @HostListener('window:keydown', ['$event'])
+    // onKeyDown(event: KeyboardEvent) {
+    //     const key = this.keyService.eventToVirtualKey(event);
+    //     const validKeys = [VirtualKeys.A, VirtualKeys.B, VirtualKeys.X, VirtualKeys.Y];
+    //     if (!validKeys.includes(key)) return;
+    //     const player = this.players.find(p => p.key === key);
 
-        // here we're faking a controller, so that people with a keyboard can use the app
+    //     // here we're faking a controller, so that people with a keyboard can use the app
 
-        // don't let the keyboard bind to more than one user
-        if (this.players.some(p => p.isReady && !p.gamepad)) return;
+    //     // don't let the keyboard bind to more than one user
+    //     if (this.players.some(p => p.isReady && !p.gamepad)) return;
 
-        if (player) this.assignGamepadToPlayer(player, null);
-    }
+    //     if (player) this.assignGamepadToPlayer(player, null);
+    // }
 
     onControllerUpdate = (event: any, message: string) => {
         // [session:user:slot] => [0:0:1]
@@ -86,23 +81,26 @@ export class ControllerSelectComponent implements OnDestroy {
         const match = message.match(/\[(\d+):(\d+):(\d+)\]/);
         if (match && match.length === 4) {
             const [_, session, user, slot] = match;
-            this.debugMessage = `User ${user + 1} is now player ${slot + 1}`;
+            const userIndex = parseInt(user, 10);
+            const playerIndex = parseInt(slot, 10);
+            const updatePlayer = this.players[playerIndex];
+            if (updatePlayer) {
+                updatePlayer.isReady = true;
+                this.debugMessage = `Player ${userIndex + 1} is now player ${playerIndex + 1}`;
+            }
         }
     };
 
     ngOnDestroy(): void {
-        // CloseToReassignController
-        this.ipc.send('CloseToReassignController');
-        this.ipc.off('UpdateControllerMap', this.onControllerUpdate);
         this.ngOnDestroy$.next();
         this.ngOnDestroy$.complete();
     }
 
-    assignGamepadToPlayer(player: Player, gamepad: Gamepad | null) {
-        player.isReady = true;
-        player.gamepad = gamepad;
+    // assignGamepadToPlayer(player: Player, gamepad: Gamepad | null) {
+    //     player.isReady = true;
+    //     player.gamepad = gamepad;
 
-        if (gamepad) console.log(`Player ${player.playerNumber} is connected to gamepad ${gamepad.index}`);
-        if (!gamepad) console.log(`Player ${player.playerNumber} is connected to the keyboard`);
-    }
+    //     if (gamepad) console.log(`Player ${player.playerNumber} is connected to gamepad ${gamepad.index}`);
+    //     if (!gamepad) console.log(`Player ${player.playerNumber} is connected to the keyboard`);
+    // }
 }
