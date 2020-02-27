@@ -57,6 +57,7 @@ export class ControllerSelectComponent implements OnDestroy {
 
         this.ipc.on('UpdateControllerMap', this.onControllerUpdate);
         this.ipc.send('StartToReassignController');
+        this.ipc.send('log', `UI INIT DONE`);
     }
 
     // @HostListener('window:keydown', ['$event'])
