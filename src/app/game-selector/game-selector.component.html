@@ -1,11 +1,7 @@
-
-    <a
-        [id]="game.platform"
-        class="game"
-        *ngFor="let game of games$ | async; let first = first"
-        (click)="onGameClick(game, $event)"
-        href="#"
-        [defaultFocus]="first"
-    >
-        <img [src]="game.imageUrl"/>
-    </a>
+<div class="content">
+    <div class="container" [@enterRemoveTrigger]>
+        <a [id]="game.platform" class="game" *ngFor="let game of games$ | async; let first = first" (click)="onGameClick(game, $event)" href="#" [defaultFocus]="first">
+            <img [src]="game.imageUrl" />
+        </a>
+    </div>
+</div>

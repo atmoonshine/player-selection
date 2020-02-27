@@ -5,6 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { ResolutionComponent } from './resolution/resolution.component';
 import { RadioButtonComponent } from './radio-button/radio-button.component';
 import { RadioButtonGroupComponent } from './radio-button/radio-button-group.component';
+import { ConfirmResolutionModalComponent } from './confirm-resolution-modal/confirm-resolution-modal.component';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 const routes: Routes = [
     {
@@ -18,7 +20,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [SettingsComponent, ResolutionComponent, RadioButtonComponent, RadioButtonGroupComponent],
-    imports: [CommonModule, RouterModule.forChild(routes)]
+    declarations: [
+        SettingsComponent,
+        ResolutionComponent,
+        RadioButtonComponent,
+        RadioButtonGroupComponent,
+        ConfirmResolutionModalComponent
+    ],
+    imports: [CommonModule, RouterModule.forChild(routes), OverlayModule]
 })
 export class SettingsModule {}

@@ -1,12 +1,16 @@
 :host {
     display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100%;
-    padding-top: 75px;
-    flex-wrap: wrap;
-    place-content: center flex-start;
 
-    .content {
-        width: 100%;
+    .container {
+        padding-top: 75px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        width: 1750px;
     }
 
     .game {

@@ -1,0 +1,6 @@
+<div class="overlay"></div>
+<div class="modal">
+    <div class="title">{{ titleText$ | async }}</div>
+    <button id="btnConfirm" #confirmButton (click)="resolutionService.onResolutionConfirmed(true)">{{ confirmText$ | async }}</button>
+    <button id="btnRevert" (click)="resolutionService.onResolutionConfirmed(false)">There was no difference in resolution.</button>
+</div>

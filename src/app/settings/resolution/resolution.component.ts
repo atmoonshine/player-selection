@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { HeaderService } from 'src/app/core/header.service';
-import { BehaviorSubject } from 'rxjs';
-
-type Resolution = '1280 x 720' | '1920 x 1080';
+import { ResolutionService, Resolution } from '../resolution.service';
+import { ConfirmResolutionModalComponent } from '../confirm-resolution-modal/confirm-resolution-modal.component';
 
 @Component({
     selector: 'app-resolution',
@@ -10,18 +9,12 @@ type Resolution = '1280 x 720' | '1920 x 1080';
     styleUrls: ['./resolution.component.scss']
 })
 export class ResolutionComponent {
-    resolutions = new Array<Resolution>('1280 x 720', '1920 x 1080');
-
-    selectedResolution$ = new BehaviorSubject<Resolution>('1920 x 1080');
-
-    constructor(private headerService: HeaderService) {
+    constructor(private headerService: HeaderService, public resolutionService: ResolutionService) {
         this.headerService.showRewindBack = true;
+        this.headerService.showASelect = false;
     }
 
-    changeResolution(resolution: Resolution) {
-        // TODO: send ipc event
-
-        console.log(`New resolution: ${resolution}`);
-        this.selectedResolution$.next(resolution);
+    open(resolution: Resolution) {
+        this.resolutionService.changeResolution(resolution, ConfirmResolutionModalComponent);
     }
 }
