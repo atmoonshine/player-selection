@@ -9,6 +9,14 @@
             }
         },
         {
+            "platform": "Chrome",
+            "imageUrl": "assets/images/chrome.png",
+            "command": {
+                "type": "ipc",
+                "arguments": ["launch", "c:\\Chrome.exe"]
+            }
+        },
+        {
             "platform": "Controller Select",
             "imageUrl": "assets/images/controller-select.png",
             "command": {
@@ -17,19 +25,19 @@
             }
         },
         {
-            "platform": "Controller Select2",
-            "imageUrl": "assets/images/controller-select.png",
+            "platform": "Show Desktop",
+            "imageUrl": "assets/images/desktop.png",
             "command": {
-                "type": "route",
-                "arguments": ["/controller-select"]
+                "type": "ipc",
+                "arguments": ["minimize"]
             }
         },
         {
-            "platform": "Controller Select3",
-            "imageUrl": "assets/images/controller-select.png",
+            "platform": "Settings",
+            "imageUrl": "assets/images/settings.png",
             "command": {
                 "type": "route",
-                "arguments": ["/controller-select"]
+                "arguments": ["/settings"]
             }
         }
     ]

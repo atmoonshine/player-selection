@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, HostBinding } from '@angular/core';
 import {} from '@angular/common';
 import { shareReplay, map, tap, takeUntil, skip, skipUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
@@ -31,6 +31,10 @@ export class GameSelectorComponent implements OnDestroy {
         map(collection => collection.games),
         shareReplay(1)
     );
+
+    @HostBinding('@enterRemoveTrigger') get enter() {
+        return '';
+    }
 
     constructor(
         private http: HttpClient,

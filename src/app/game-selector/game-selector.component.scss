@@ -1,32 +1,32 @@
 :host {
     display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100%;
+    padding-top: 75px;
+    flex-wrap: wrap;
+    place-content: center flex-start;
 
-    .container {
-        padding-top: 75px;
+    .content {
+        width: 100%;
+    }
+
+    .game {
+        width: 522px;
+        height: 252px;
+        margin: 30px - 4; //remove border
         display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
-        width: 1750px;
+        box-shadow: 0 2px 10px 5px rgba(0, 0, 0, 0.03);
+        border: solid 4px transparent;
+        border-radius: 20px;
 
-        .game {
-            width: 522px;
-            height: 252px;
-            margin: 26px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 2px 10px 5px rgba(0, 0, 0, 0.03);
-            border: solid 4px transparent;
-            border-radius: 20px;
+        &:focus,
+        &:hover {
+            border-color: #f8f8f8;
+        }
 
-            &:focus,
-            &:hover {
-                border-color: #f8f8f8;
-            }
+        img {
+            width: 100%;
         }
     }
 }
