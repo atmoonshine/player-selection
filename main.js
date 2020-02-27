@@ -37,6 +37,10 @@ function createWindow() {
         });
     });
 
+    ipcMain.on('log', (_event, ...messages) => {
+        log.info('controllerMap: ', ...messages);
+    });
+
     ipcMain.on('exit', (_event, args) => {
         process.exit(0);
     });
@@ -99,7 +103,6 @@ function createWindow() {
                 process.exit(0);
             }, 2000);
         });
-        LAM.LAM_ReassignControllerDone();
     }
 }
 

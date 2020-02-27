@@ -85,8 +85,10 @@ export class ControllerSelectComponent implements OnDestroy {
             const playerIndex = parseInt(slot, 10);
             const updatePlayer = this.players[playerIndex];
             if (updatePlayer) {
+                const logMessage = `Player ${userIndex + 1} is now player ${playerIndex + 1}`;
                 updatePlayer.isReady = true;
-                this.debugMessage = `Player ${userIndex + 1} is now player ${playerIndex + 1}`;
+                this.debugMessage = logMessage;
+                this.ipc.send('log', logMessage);
             }
         }
     };
