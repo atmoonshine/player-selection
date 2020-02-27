@@ -7,6 +7,7 @@ import { RadioButtonComponent } from './radio-button/radio-button.component';
 import { RadioButtonGroupComponent } from './radio-button/radio-button-group.component';
 import { ConfirmResolutionModalComponent } from './confirm-resolution-modal/confirm-resolution-modal.component';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
     {
@@ -27,6 +28,6 @@ const routes: Routes = [
         RadioButtonGroupComponent,
         ConfirmResolutionModalComponent
     ],
-    imports: [CommonModule, RouterModule.forChild(routes), OverlayModule]
+    imports: [CommonModule, RouterModule.forChild(routes), OverlayModule, SharedModule]
 })
 export class SettingsModule {}

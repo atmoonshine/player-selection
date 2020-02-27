@@ -20,6 +20,7 @@ export class ResolutionService {
     }
 
     changeResolution(resolution: Resolution, component: any) {
+        if (resolution === this.selectedResolution$.value) return;
         this.requestedResolution$.next(resolution);
 
         // TODO: send ipc event
@@ -39,5 +40,9 @@ export class ResolutionService {
         this.requestedResolution$.next(undefined);
         this.overlayRef?.detach();
         this.overlayRef?.dispose();
+
+        window.setTimeout(() => {
+            document.getElementById('rez' + this.selectedResolution$.value.split(' x ')[1])?.focus();
+        })
     }
 }

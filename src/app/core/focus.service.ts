@@ -127,7 +127,6 @@ export class FocusService {
     keyDown$ = merge(
         fromEvent<KeyboardEvent>(window, 'keydown').pipe(
             map(event => {
-                console.log({event});
                 let direction = this.keyService.eventToVirtualKey(event);
 
                 const validDirections = [VirtualKeys.Up, VirtualKeys.Down, VirtualKeys.Left, VirtualKeys.Right, VirtualKeys.Back];
@@ -151,8 +150,6 @@ export class FocusService {
 
             const activeElementPath = document.activeElement?.attributes.getNamedItem('focusPath')?.value;
 
-            console.log({activeElementPath});
-            console.log(this.focusableElements.size);
             if (!activeElementPath && this.focusableElements.size) {
                 (this.focusableElements.values().next().value as Focusable).element.focus();
             } else if (activeElementPath) {
@@ -171,8 +168,6 @@ export class FocusService {
                         candidates.push(focusableElement);
                     }
                 });
-
-                console.log({candidates});
 
                 const distList = candidates.map(candidate => {
                     const destCR = candidate.element.getBoundingClientRect();

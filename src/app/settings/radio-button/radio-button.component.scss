@@ -39,6 +39,7 @@ button[radio-button] {
         &.checked {
             .checkmark {
                 background-color: white;
+                box-shadow: inset 0 0 0 8px #a42f8f;
             }
         }
     }
@@ -48,7 +49,7 @@ button[radio-button] {
             background-color: white;
             border-color: white;
             //border: solid 8px white;
-            box-shadow: inset 0 0 0 8px #a42f8f;
+            box-shadow: inset 0 0 0 8px black;
         }
 
         .content {
