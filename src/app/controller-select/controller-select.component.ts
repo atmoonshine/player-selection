@@ -57,6 +57,7 @@ export class ControllerSelectComponent implements OnDestroy {
 
         this.ipc.on('UpdateControllerMap', this.onControllerUpdate);
         this.ipc.send('StartToReassignController');
+        this.ipc.send('log', `UI INIT DONE`);
     }
 
     // @HostListener('window:keydown', ['$event'])
@@ -76,6 +77,7 @@ export class ControllerSelectComponent implements OnDestroy {
 
     onControllerUpdate = (event: any, message: string) => {
         // [session:user:slot] => [0:0:1]
+        this.ipc.send('log', `UI received ${message}`);
         this.debugMessage = message;
 
         const match = message.match(/\[(\d+):(\d+):(\d+)\]/);
@@ -84,9 +86,12 @@ export class ControllerSelectComponent implements OnDestroy {
             const userIndex = parseInt(user, 10);
             const playerIndex = parseInt(slot, 10);
             const updatePlayer = this.players[playerIndex];
+            this.ipc.send('log', `UI userIndex=${userIndex} playerIndex=${playerIndex}`);
             if (updatePlayer) {
+                const logMessage = `Player ${userIndex + 1} is now player ${playerIndex + 1}`;
                 updatePlayer.isReady = true;
-                this.debugMessage = `Player ${userIndex + 1} is now player ${playerIndex + 1}`;
+                this.debugMessage = logMessage;
+                this.ipc.send('log', `UI message ${logMessage}`);
             }
         }
     };

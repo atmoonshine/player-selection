@@ -37,6 +37,10 @@ function createWindow() {
         });
     });
 
+    ipcMain.on('log', (_event, ...messages) => {
+        log.info('log: ', ...messages);
+    });
+
     ipcMain.on('exit', (_event, args) => {
         process.exit(0);
     });
@@ -54,7 +58,7 @@ function createWindow() {
     win.setFullScreen(true);
 
     // The following is optional and will open the DevTools:
-    // win.webContents.openDevTools();
+    win.webContents.openDevTools();
 
     win.on('closed', () => {
         win = null;
@@ -91,15 +95,21 @@ function createWindow() {
             LAM.LAM_ReassignControllerDone();
         });
 
+        let triggeredExit = false;
         ipcMain.on('CloseToReassignControllerAndExit', () => {
             log.info('CloseToReassignControllerAndExit');
             LAM.LAM_ReassignControllerDone();
+
+            if (triggeredExit) {
+                return;
+            }
+
+            triggeredExit = true;
 
             setTimeout(() => {
                 process.exit(0);
             }, 2000);
         });
-        LAM.LAM_ReassignControllerDone();
     }
 }
 
