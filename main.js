@@ -38,7 +38,7 @@ function createWindow() {
     });
 
     ipcMain.on('log', (_event, ...messages) => {
-        log.info('controllerMap: ', ...messages);
+        log.info('log: ', ...messages);
     });
 
     ipcMain.on('exit', (_event, args) => {
