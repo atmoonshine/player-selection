@@ -95,9 +95,16 @@ function createWindow() {
             LAM.LAM_ReassignControllerDone();
         });
 
+        let triggeredExit = false;
         ipcMain.on('CloseToReassignControllerAndExit', () => {
             log.info('CloseToReassignControllerAndExit');
             LAM.LAM_ReassignControllerDone();
+
+            if (triggeredExit) {
+                return;
+            }
+
+            triggeredExit = true;
 
             setTimeout(() => {
                 process.exit(0);
