@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { SettingsModule } from './settings/settings.module';
 
 const routes: Routes = [{ path: '', pathMatch: 'full', redirectTo: 'controller-select' }];
 
@@ -22,7 +23,8 @@ const routes: Routes = [{ path: '', pathMatch: 'full', redirectTo: 'controller-s
         SharedModule,
         CoreModule,
         GameSelectorModule,
-        ControllerSelectModule
+        ControllerSelectModule,
+        SettingsModule
     ],
     bootstrap: [AppComponent]
 })

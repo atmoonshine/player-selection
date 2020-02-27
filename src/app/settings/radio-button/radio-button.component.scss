@@ -1,0 +1,54 @@
+button[radio-button] {
+    background: none;
+    border: none;
+    text-align: left;
+    display: block;
+
+    +button[radio-button] {
+        margin-top: 68px;
+    }
+
+    .checkmark {
+        height: 44px;
+        display: inline-block;
+        border-radius: 50%;
+        width: 44px;
+        margin-right: 48px;
+        vertical-align: middle;
+        border: solid 1px white;
+        background-color: black;
+    }
+
+    .content {
+        display: inline-block;
+        font-family: Lato;
+        font-size: 36px;
+        vertical-align: middle;
+        color: white;
+    }
+
+    &:hover,
+    &:focus {
+        color: white;
+        outline: none;
+
+        &.checked {
+            .checkmark {
+                background-color: white;
+            }
+        }
+    }
+
+    &.checked {
+        .checkmark {
+            background-color: white;
+            border-color: white;
+            //border: solid 8px white;
+            box-shadow: inset 0 0 0 8px black;
+        }
+
+        .content {
+            color: white;
+        }
+    }
+}

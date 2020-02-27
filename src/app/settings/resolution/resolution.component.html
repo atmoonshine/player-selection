@@ -1,0 +1,6 @@
+<div class="title">SELECT YOUR PREFERRED RESOLUTION</div>
+<div class="section">
+    <app-radio-button-group [selectedValue]="selectedResolution$ | async">
+        <button radio-button *ngFor="let resolution of resolutions" [value]="resolution" (click)="selectedResolution$.next(resolution)">{{ resolution }}</button>
+    </app-radio-button-group>
+</div>

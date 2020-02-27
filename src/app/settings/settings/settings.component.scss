@@ -1,0 +1,35 @@
+:host {
+    display: flex;
+    height: 100vh;
+    color: white;
+    padding: 200px 64px 170px 64px;
+    box-sizing:border-box
+}
+
+.menu {
+    height: 100%;
+    border-right: solid 1px #979797;
+    display: inline-block;
+    vertical-align: top;
+    padding-right: 25px;
+
+    a {
+        display: flex;
+        background-color: black;
+        color: white;
+        width: 422px;
+        height: 94px;
+        justify-content: center;
+        align-items: center;
+        font-family: Lato;
+        font-size: 36px;
+        letter-spacing: 2.75px;
+        text-decoration: none;
+    }
+}
+
+.content {
+    padding-left: 94px;
+    width: 100%;
+    height: 100%;
+}
