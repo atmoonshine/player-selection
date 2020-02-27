@@ -72,7 +72,7 @@ function createWindow() {
 
         const callback = ffi.Callback('void', ['string'], function(controllerMap) {
             log.info('controllerMap: ', controllerMap);
-            mainWindow.webContents.send('UpdateControllerMap', controllerMap);
+            win.webContents.send('UpdateControllerMap', controllerMap);
         });
 
         LAM.LAM_Init('LobbyApp');
@@ -96,6 +96,7 @@ function createWindow() {
             LAM.LAM_ReassignControllerDone();
             process.exit(0);
         });
+        LAM.LAM_ReassignControllerDone();
     }
 }
 
