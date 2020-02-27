@@ -24,6 +24,7 @@ function createWindow() {
             nodeIntegration: true
         }
     });
+    win.setBackgroundColor('#000000');
     win.setMenuBarVisibility(false);
 
     ipcMain.on('launch', (_event, args) => {
