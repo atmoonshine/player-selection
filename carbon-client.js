@@ -27,4 +27,4 @@ process.on('beforeExit', code => {
 });
 
 // create an event so node doesn't exit
-setTimeout(() => {}, Number.MAX_SAFE_INTEGER);
+setTimeout(() => {}, 6000 * 10);
