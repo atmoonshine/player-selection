@@ -9,7 +9,6 @@ const LAM = ffi.Library(__dirname + '\\lib\\GameLobbyMediator.dll', {
 
 const callback = ffi.Callback('void', ['string'], function(controllerMap) {
     console.log('controllerMap: ', controllerMap);
-    win.webContents.send('UpdateControllerMap', controllerMap);
 });
 
 LAM.LAM_Init('LobbyApp');
@@ -24,6 +23,7 @@ process.on('SIGINT', code => {
     LAM.LAM_ReassignControllerDone();
     LAM.LAM_Finalize();
     console.log('clean exit');
+    process.exit(0);
 });
 
 // windows work arround to catch SIGINT
