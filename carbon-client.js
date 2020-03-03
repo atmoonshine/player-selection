@@ -19,12 +19,19 @@ LAM.LAM_RegisterControllerMapUpdateCB(callback);
 console.log('done');
 LAM.LAM_StartToReassignController();
 
-process.on('beforeExit', code => {
+process.on('SIGINT', code => {
     console.log('Process beforeExit event:', code);
     LAM.LAM_ReassignControllerDone();
     LAM.LAM_Finalize();
     console.log('clean exit');
 });
 
-// create an event so node doesn't exit
-setTimeout(() => {}, 6000 * 10);
+// windows work arround to catch SIGINT
+const rl = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+rl.on('SIGINT', function() {
+    process.emit('SIGINT');
+});
