@@ -25,3 +25,6 @@ process.on('beforeExit', code => {
     LAM.LAM_Finalize();
     console.log('clean exit');
 });
+
+// create an event so node doesn't exit
+setTimeout(() => {}, Number.MAX_SAFE_INTEGER);
