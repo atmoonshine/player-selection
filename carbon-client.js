@@ -19,6 +19,7 @@ console.log('done');
 LAM.LAM_StartToReassignController();
 
 process.on('SIGINT', code => {
+    callback; // extra reference to callback, otherwise it will be gargage collected!
     console.log('Process beforeExit event:', code);
     LAM.LAM_ReassignControllerDone();
     LAM.LAM_Finalize();

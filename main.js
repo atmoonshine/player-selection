@@ -79,6 +79,11 @@ function createWindow() {
             win.webContents.send('UpdateControllerMap', controllerMap);
         });
 
+        // Make an extra reference to the callback pointer to avoid GC
+        process.on('exit', function() {
+            callback; // extra reference
+        });
+
         LAM.LAM_Init('LobbyApp');
 
         log.info('registering the callback');
